@@ -5,48 +5,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore, combineReducers  } from 'redux'
+import {createStore, combineReducers} from 'redux';
+import allReducer from './reducers';
+import { Provider} from 'react-redux';
 
 
-//ACTION -> OBJECT WITH NAME/TYPE
-const increment = () => {
-  return {
-    type: 'INCREMENT'
-  }
-}
-
-
-//REDUCER ^ ACTION -> STORE/STATE
-
-let initialstate = { 
-  result: [{Rock: ['Draw', 'Lost', 'Win'], Scissor: ['Win', 'Drawn', 'Loss'],Paper: ['Loss', 'Win', 'Draw']}]
-};
-
-const counter = (state = [], action) => {
-  switch(action.type){
-    case "INCREMENT":
-      return initialstate;
-    default:
-      return state;
-  }
-};
-
-
-//STORE
 const store = createStore(
-  counter
-);
-
-//DISPLAY
-store.subscribe(() => console.log(store.getState()));
-
-//DISPATCH -> REDUCER
-store.dispatch(increment());
+  allReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
 
 ReactDOM.render(
+  <Provider store={store}>
   <React.StrictMode>
     <App />
+
   </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
